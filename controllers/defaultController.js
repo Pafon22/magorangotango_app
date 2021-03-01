@@ -123,7 +123,7 @@ exports.updateOne = function (atb, value) {
       break;
       case "historia":
       case "história":
-        atb = historia;
+        atb = "historia";
         break;
     case "level":
     case "nível":

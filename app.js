@@ -137,7 +137,7 @@ async function buscar(atb, nick, channel) {
         break;
       case "HISTORIA":
       case "HISTÓRIA":
-        resp += "A história mágica de " + twitch + " é: " + result.historia;
+        resp += "História de " + twitch + ": " + result.historia;
         break;
       case "RPG":
         rpg = result.rpg;
