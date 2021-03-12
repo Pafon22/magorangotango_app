@@ -44,7 +44,7 @@ const MAGOSchema = new Schema({
   },
   poderes: {
     type: Array,
-    default: [{ nome: "0", data: "0", dado: "0" }],
+    default: [{ nome: "0", data: "0", dado: "0" }, { nome: "0", data: "0", dado: "0" }, { nome: "0", data: "0", dado: "0" }, { nome: "0", data: "0", dado: "0" }, { nome: "0", data: "0", dado: "0" }, { nome: "0", data: "0", dado: "0" }],
   },
   x1: {
     type: Array,

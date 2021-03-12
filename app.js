@@ -72,7 +72,7 @@ console.log("FERRAMENTAS ESTÃO OK");
 const tmi = require('tmi.js');
 //const { count } = require('./models/MAGOmodel');
 const pafonBotName = 'magorangotango';
-const canais = ['magorangotango', 'pafon22'];
+const canais = ['magorangotango', 'pafon22', 'tvmago'];
 const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
 
 const opts = {
@@ -109,10 +109,10 @@ async function criar(nick, channel, user) {
   } catch {
     resp += "Já existe um(a) mago(a) associado(a) a esse nick.";
   }
-  if(user != "STREAMELEMENTS"){
-  client.say(channel, resp);
+  if (user != "STREAMELEMENTS") {
+    client.say(channel, resp);
   }
-  
+
 }
 
 async function buscar(atb, nick, channel) {
@@ -144,6 +144,7 @@ async function buscar(atb, nick, channel) {
         resp += "Status do RPG de " + twitch + ": " + defaultController.revelarIndex(atb, rpg);
         break;
       case "PET":
+      case "PETNOME":
         pet = result.pet;
         //resp += "O pet mágico de " + result.twitch + " é: " + result.pet[0].animal + " chamado " + result.pet[1].poderes;
         resp += "O pet mágico de " + twitch + " é um(a) " + pet[0].animal + " chamado(a) " + pet[0].nome + "!";
@@ -154,7 +155,7 @@ async function buscar(atb, nick, channel) {
         poderes = result.poderes;
         if (defaultController.revelarIndex(atb, poderes[0].nome) != "Nenhum") {
           resp += " @" + twitch;
-          while (contaPoder < poderes.length && defaultController.revelarIndex(atb, poderes[contaPoder].nome)!= "Nenhum") {
+          while (contaPoder < poderes.length && defaultController.revelarIndex(atb, poderes[contaPoder].nome) != "Nenhum") {
             resp += " ───────────────★──────────────── ";
             resp += " ➣ Poder: " + defaultController.revelarIndex(atb, poderes[contaPoder].nome) + " / Data: " + poderes[contaPoder].data + " / Dado: " + poderes[contaPoder].dado;
 
@@ -171,7 +172,7 @@ async function buscar(atb, nick, channel) {
         elementos = result.elementos;
         if (defaultController.revelarIndex(atb, elementos[0].nome) != "Nenhum") {
           resp += " @" + twitch;
-          while (contaElemento < elementos.length && defaultController.revelarIndex(atb, elementos[contaElemento].nome)!= "Nenhum") {
+          while (contaElemento < elementos.length && defaultController.revelarIndex(atb, elementos[contaElemento].nome) != "Nenhum") {
             resp += " ───────────────★──────────────── ";
             if (contaElemento == 0) {
               resp += " ➣ Elemento Principal: " + defaultController.revelarIndex(atb, elementos[contaElemento].nome);
@@ -272,15 +273,45 @@ function mensagemChegou(channel, contexto, mensagem, ehBot) {
       ehComigo = false;
       console.log("Eh Atributo: " + nomeDoComando[0]);
       if (nomeDoComando[1] == null) {
+        buscar(nomeDoComando[0], user, channel);
         //resp += "Por favor, digite um nome para a busca. Exemplo: !discord @" + contexto.username;
       } else {
         if (nomeDoComando[2] == null) {
           buscar(nomeDoComando[0], nomeDoComando[1], channel);
         } else {
           if (defaultController.ehMod(user) != -1) {
-            console.log("EhMod");
+            console.log("Mod " + user + " editou " + nomeDoComando[0] + " de " + nomeDoComando[1]);
             copia = defaultController.removePalavra(msg, 2);
             editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+          } else {
+            if (nomeDoComando[1] == user) {
+              console.log("Não Mod ( " + nomeDoComando[1] + " ) editou seu próprio " + nomeDoComando[0]);
+              switch (nomeDoComando[0]) {
+                case "NOME":
+                  copia = defaultController.removePalavra(msg, 2);
+                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+                  break;
+                case "DISC":
+                case "DISCORD":
+                  copia = defaultController.removePalavra(msg, 2);
+                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+                  break;
+                case "HISTORIA":
+                case "HISTÓRIA":
+                  copia = defaultController.removePalavra(msg, 2);
+                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+                  break;
+                case "PETNOME":
+                  copia = defaultController.removePalavra(msg, 2);
+                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+                  break;
+                default:
+                  console.log("Não Mod ( " + nomeDoComando[1] + " ) falhou ao editar seu próprio " + nomeDoComando[0]);
+                  resp += "Comando inválido ou permitido apenas para MODS."
+                  client.say(channel, resp);
+                  break;
+              }
+            }
 
           }
         }
@@ -325,7 +356,17 @@ function mensagemChegou(channel, contexto, mensagem, ehBot) {
           ehComigo = true;
           resp += defaultController.menu();
           break;
-
+          case 'MENUPODERES':
+          case 'MENUPODER':
+              ehComigo = true;
+              resp += defaultController.menuPoderes();
+              break;
+          case 'MENUELEMENTOS':
+          case 'MENUELEMENTO':
+              ehComigo = true;
+              resp += defaultController.menuElementos();
+              break;
+            
         default:
           ehComigo = false;
           console.log(`* Não conheço o comando ${nomeDoComando[0]}`);

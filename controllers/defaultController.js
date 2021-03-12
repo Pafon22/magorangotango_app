@@ -5,8 +5,8 @@
 const apiController = require('./apiController');
 const defaultController = require('./defaultController');
 const MAGO = require('../models/MAGOmodel');
-const atributos = ['NOME', 'HISTORIA', 'HISTÓRIA', 'DISC', 'DISCORD', 'RANK', 'NÍVEL', 'NIVEL', 'LEVEL', 'PODER', 'PODERES', 'RPG', 'ELEMENTO', 'ELEMENTOS', 'PET', 'DUELO', 'X1'];
-const mods = ['PAFON22', 'TVMAGO', 'MELNERVA', 'STREAMELEMENTS'];
+const atributos = ['NOME', 'HISTORIA', 'HISTÓRIA', 'DISC', 'DISCORD', 'RANK', 'NÍVEL', 'NIVEL', 'LEVEL', 'PODER', 'PODERES', 'RPG', 'ELEMENTO', 'ELEMENTOS', 'PET', 'PETNOME', 'DUELO', 'X1'];
+const mods = ['PAFON22', 'TVMAGO', 'MELNERVA', 'STREAMELEMENTS', 'FUSOOO12'];
 const elementos = ['Nenhum', 'ÁGUA', 'AR', 'FOGO', 'TERRA'];
 const poderes = ['Nenhum', 'KARU MAKUTU', 'GOLEM KOREUTU', 'DESCENDÊNCIA ALIENÍGENA'];
 const rpg = ['NÃO ADQUIRIDO', 'ADQURIDO'];
@@ -89,11 +89,86 @@ exports.buscarMago = function (nick) {
   return MAGO.findOne({ twitch: nick });
 }
 
-exports.editarMago = function (nick, atb, value) {
+exports.editarMago = async function (nick, atb, value) {
   lowcase = atb.toLowerCase();
   capslock = value.toUpperCase();
   console.log(lowcase + capslock);
-  return MAGO.findOneAndUpdate({ twitch: nick }, JSON.parse(defaultController.updateOne(lowcase, capslock)));
+  try { magoEdit = await MAGO.findOne({ twitch: nick }); }
+
+  catch { }
+  
+  return MAGO.findOneAndUpdate({ twitch: nick }, JSON.parse(defaultController.updateOne(lowcase, capslock, magoEdit)));
+}
+exports.updateOne = function (atb, value, magoEdit) {
+  switch (atb) {
+    case "disc":
+      atb = "discord";
+      break;
+    case "historia":
+    case "história":
+      atb = "historia";
+      break;
+    case "level":
+    case "nível":
+    case "nivel":
+      atb = "rank";
+      break;
+    case "pet":
+      //console.log('{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}');
+
+      return '{"' + atb + '":[{"animal":"' + value + '", "nome":"' + magoEdit.pet[0].nome + '"}]}';
+      break;
+    case "petnome":
+      atb = "pet";
+      //console.log('{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}');
+      return '{"' + atb + '":[{"animal":"' + magoEdit.pet[0].animal + '", "nome":"' + value + '"}]}';
+      break;
+    case "elemento":
+    case "elementos":
+      tam = 4;
+      atb = "elementos";
+      jsonText = '{"' + atb + '":[';
+      if (magoEdit.elementos[0].nome == "0") {
+      } else {
+        for (countElementos = 0; countElementos < tam; countElementos++) {
+          if (magoEdit.elementos[countElementos].nome != "0") {
+            jsonText += '{"nome":"' + magoEdit.elementos[countElementos].nome  + '"}, ';
+          }
+        }
+      }
+      jsonText += '{"nome":"' + value + '"}';
+      jsonText += ']}';
+      
+      return jsonText;
+      break;
+
+    case "poder":
+    case "poderes":
+      tam = magoEdit.poderes.length;
+      atb = "poderes";
+      jsonText = '{"' + atb + '":[';
+      if (magoEdit.poderes[0].nome == "0") {
+      } else {
+        for (countPoderes = 0; countPoderes < tam; countPoderes++) {
+          if (magoEdit.poderes[countPoderes].nome != "0") {
+            jsonText += '{"nome":"' + magoEdit.poderes[countPoderes].nome + '", "data": "' + magoEdit.poderes[countPoderes].data + '", "dado": "' + magoEdit.poderes[countPoderes].dado + '"}, ';
+          }
+        }
+      }
+      jsonText += '{"nome":"' + value + '", "data": "", "dado": ""}';
+      jsonText += ']}';
+      return jsonText;
+      break;
+    case "x1":
+    case "duelo":
+      atb = "x1";
+      return '{"' + atb + '":[{"inimigo":"' + value + '", "data": "", "jogo": "", "resultado": ""}]}';
+      break;
+
+    default:
+      break;
+  }
+  return '{"' + atb + '":"' + value + '"}';
 }
 
 exports.deletarMago = function (nick) {
@@ -116,47 +191,6 @@ exports.padronizarNick = function (username) {
   return userPadronizado;
 }
 
-exports.updateOne = function (atb, value) {
-  switch (atb) {
-    case "disc":
-      atb = "discord";
-      break;
-      case "historia":
-      case "história":
-        atb = "historia";
-        break;
-    case "level":
-    case "nível":
-    case "nivel":
-      atb = "rank";
-      break;
-    case "pet":
-      //console.log('{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}');
-      return '{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}';
-      break;
-    case "elemento":
-    case "elementos":
-      atb = "elementos";
-      //console.log('{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}');
-      return '{"' + atb + '":[{"nome":"' + value + '"}, {"nome":"0"}, {"nome":"0"}, {"nome":"0"}]}';
-      break;
-
-    case "poder":
-    case "poderes":
-      atb = "poderes";
-      return '{"' + atb + '":[{"nome":"' + value + '", "data": "", "dado": ""}]}';
-      break;
-    case "x1":
-    case "duelo":
-      atb = "x1";
-      return '{"' + atb + '":[{"inimigo":"' + value + '", "data": "", "jogo": "", "resultado": ""}]}';
-      break;
-
-    default:
-      break;
-  }
-  return '{"' + atb + '":"' + value + '"}';
-}
 
 exports.menu = function () {
   text = "⚡ GRIMÓRIO ⚡ ";
@@ -188,6 +222,26 @@ exports.menuAtributos = function () {
   return texto;
 }
 
+exports.menuPoderes = function () {
+  texto = `⚡ PODERES ⚡ ───────────────★──────────────── `
+  texto += "➣ 1 - KARU MAKUTU"
+  texto += "⠀➣ 2 - GOLEM KOREUTU"
+  texto += "⠀➣ 3 - DESCENDÊNCIA ALIENÍGENA "
+  texto += "➣ Exemplo de Uso: '!poder @frangoatirador 3' (Descendência Alienígena adicionada na lista de poderes de @frangoatirador) "
+  texto += ` ───────────────★──────────────── `
+  return texto;
+}
+
+exports.menuElementos = function () {
+  texto = `⚡ ELEMENTOS ⚡ ───────────────★──────────────── `
+  texto += "➣ 1 - ÁGUA"
+  texto += " ➣ 2 - AR "
+  texto += " ➣ 3 - FOGO"
+  texto += " ➣ 4 - TERRA"
+  texto += " ➣ Exemplo de Uso: '!elemento @krakendofifa 2' (Elemento AR adicionado na lista de poderes de @krakendofifa) "
+  texto += ` ───────────────★──────────────── `
+  return texto;
+}
 
 /*exports.update = function (atributo, nome, valor, next) {
   twitchname = defaultController.padronizarNick(nome);
