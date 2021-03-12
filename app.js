@@ -3,6 +3,7 @@
  */
 
 // associar as dependências instaladas
+const newrelic = require('newrelic');
 const express = require('express');
 const apiController = require('./controllers/apiController');
 const defaultController = require('./controllers/defaultController');
