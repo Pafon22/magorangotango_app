@@ -34,12 +34,12 @@ app.use(function (err, req, res, next) {
   res.status(422).send({ error: err.message });
 });
 
-
-let port = 5000;
+//.listen(process.env.PORT || 5000
+//let port = 5000;
 // servidor á escuta no porto 5000
 // 'process.env.port': caso usemos Heroku
-app.listen(process.env.port || port, () => {
-  console.log('Servidor em execução no porto: ' + port);
+app.listen(process.env.port || 5000, () => {
+  console.log('Servidor em execução na porta: ' + (process.env.port || "5000"));
 });
 
 const mongoose = require('mongoose');
