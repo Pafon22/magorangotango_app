@@ -339,7 +339,7 @@ function mensagemChegou(channel, contexto, mensagem, ehBot) {
         case 'DADO':
           ehComigo = true;
           if (!Number.isInteger(parseFloat(nomeDoComando[1])) || parseFloat(nomeDoComando[1]) < 1) {
-            resp += "Por favor, escolha um valor válido para o dado (apenas números inteiros acima de 0). 🎲"
+            resp += "Por favor, escolha um valor válido para o dado (apenas números inteiros acima de 0). 🎲";
           }
           else {
             resp += "🎲 " + defaultController.rollDice(nomeDoComando[1]).toString() + " 🎲";
