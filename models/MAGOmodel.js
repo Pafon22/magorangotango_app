@@ -52,7 +52,7 @@ const MAGOSchema = new Schema({
   },
   x1: {
     type: Array,
-    default: [{ inimigo: "0", jogo: "0", resultado: "0", data: "0" }]
+    default: [{ info: "0" }]
   },
 });
 

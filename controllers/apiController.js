@@ -38,7 +38,7 @@ exports.find = function (req, res) {
           res.send(mago.pet);
           break;
         case "X1":
-          res.send(mago.x);
+          res.send(mago.x1);
           break;
         default:
           res.send(mago);

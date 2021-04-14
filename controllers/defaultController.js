@@ -170,7 +170,7 @@ exports.updateOne = function (atb, value, magoEdit) {
     case "x1":
     case "duelo":
       atb = "x1";
-      return '{"' + atb + '":[{"inimigo":"' + value + '", "data": "", "jogo": "", "resultado": ""}]}';
+      return '{"' + atb + '":[{"info":"' + value + '"}]}';
       break;
 
     default:

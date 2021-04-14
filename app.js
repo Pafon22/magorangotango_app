@@ -72,7 +72,8 @@ console.log("FERRAMENTAS ESTÃO OK");
 const tmi = require('tmi.js');
 //const { count } = require('./models/MAGOmodel');
 const pafonBotName = 'magorangotango';
-const canais = ['magorangotango', 'pafon22', 'tvmago'];
+//const canais = ['magorangotango', 'pafon22', 'tvmago'];
+const canais = ['magorangotango', 'pafon22'];
 const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
 
 const opts = {
@@ -195,13 +196,13 @@ async function buscar(atb, nick, channel) {
       case "X1":
         contaX1 = 0;
         x1 = result.x1;
-        if (x1[0].inimigo != "0") {
+        if (x1[0].info != "0") {
           resp += " @" + twitch;
           //console.log(defaultController.revelarIndex(poderes[0].nome));
           while (contaX1 < x1.length) {
             resp += " ───────────────★──────────────── ";
 
-            resp += " ➣ Inimigo: " + x1[contaX1].inimigo + " / Jogo: " + x1[contaX1].jogo + " / Resultado: " + x1[contaX1].resultado + " / Data: " + x1[contaX1].data;
+            resp += " ➣ "+ x1[contaX1].info;
 
             contaX1++;
           } resp += " ───────────────★──────────────── ";
