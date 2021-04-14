@@ -72,8 +72,8 @@ console.log("FERRAMENTAS ESTÃO OK");
 const tmi = require('tmi.js');
 //const { count } = require('./models/MAGOmodel');
 const pafonBotName = 'magorangotango';
-//const canais = ['magorangotango', 'pafon22', 'tvmago'];
-const canais = ['magorangotango', 'pafon22'];
+const canais = ['magorangotango', 'pafon22', 'tvmago'];
+//const canais = ['magorangotango', 'pafon22'];
 const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
 
 const opts = {
