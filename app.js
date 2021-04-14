@@ -72,7 +72,7 @@ console.log("FERRAMENTAS ESTÃO OK");
 const tmi = require('tmi.js');
 //const { count } = require('./models/MAGOmodel');
 const pafonBotName = 'magorangotango';
-const canais = ['magorangotango', 'pafon22', 'tvmago'];
+const canais = ['magorangotango', 'pafon22'];
 const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
 
 const opts = {
@@ -129,6 +129,10 @@ async function buscar(atb, nick, channel) {
       case "DISCORD":
         resp += "O discord mágico de " + twitch + " é: " + result.discord;
         break;
+        case "RAÇA":
+        case "RACA":
+          resp += "A raça de " + twitch + " é: " + result.raca;
+          break;
       case "NIVEL":
       case "NÍVEL":
       case "LEVEL":
@@ -293,6 +297,11 @@ function mensagemChegou(channel, contexto, mensagem, ehBot) {
                   break;
                 case "DISC":
                 case "DISCORD":
+                  copia = defaultController.removePalavra(msg, 2);
+                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
+                  break;
+                case "RACA":
+                case "RAÇA":
                   copia = defaultController.removePalavra(msg, 2);
                   editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
                   break;

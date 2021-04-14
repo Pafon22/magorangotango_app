@@ -5,7 +5,7 @@
 const apiController = require('./apiController');
 const defaultController = require('./defaultController');
 const MAGO = require('../models/MAGOmodel');
-const atributos = ['NOME', 'HISTORIA', 'HISTÓRIA', 'DISC', 'DISCORD', 'RANK', 'NÍVEL', 'NIVEL', 'LEVEL', 'PODER', 'PODERES', 'RPG', 'ELEMENTO', 'ELEMENTOS', 'PET', 'PETNOME', 'DUELO', 'X1'];
+const atributos = ['NOME', 'HISTORIA', 'HISTÓRIA', 'DISC', 'DISCORD', 'RANK', 'NÍVEL', 'NIVEL', 'LEVEL', 'PODER', 'PODERES', 'RACA', 'RAÇA', 'RAÇA', 'RPG', 'ELEMENTO', 'ELEMENTOS', 'PET', 'PETNOME', 'DUELO', 'X1'];
 
 const mods = ['PAFON22', 'TVMAGO', 'MELNERVA', 'STREAMELEMENTS', 'FUSOOO12', 'GABRIEL9082', 'SUPERFEIJAO0O0', 'FUTURE_1800', 'MARIDRUMMOND'];
 
@@ -104,6 +104,7 @@ exports.editarMago = async function (nick, atb, value) {
 exports.updateOne = function (atb, value, magoEdit) {
   switch (atb) {
     case "disc":
+    case "discord":
       atb = "discord";
       break;
     case "historia":
@@ -115,6 +116,11 @@ exports.updateOne = function (atb, value, magoEdit) {
     case "nivel":
       atb = "rank";
       break;
+      case "raça":
+      case "raca":
+        atb = "raca";
+        break;
+
     case "pet":
       //console.log('{"' + atb + '":[{"animal":"' + value + '", "nome": ""}]}');
 
@@ -220,6 +226,7 @@ exports.menuAtributos = function () {
   texto += "⠀⠀⠀⠀➣!pet "
   texto += "⠀⠀⠀⠀⠀ ➣!elementos "
   texto += "⠀ ➣!x1 "
+  texto += "⠀ ➣!raca "
   texto += ` ───────────────★──────────────── `
   return texto;
 }

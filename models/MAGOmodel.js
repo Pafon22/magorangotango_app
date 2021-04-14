@@ -29,6 +29,10 @@ const MAGOSchema = new Schema({
     type: String,
     default: "1"
   },
+  raca: {
+    type: String,
+    default: "0"
+  },
   rpg: {
     type: String,
     default: "0"

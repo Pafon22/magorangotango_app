@@ -13,6 +13,9 @@ exports.find = function (req, res) {
         case "DISCORD":
           res.send(mago.discord);
           break;
+        case "RACA":
+          res.send(mago.raca);
+          break;
         case "NOME":
           res.send(mago.nome);
           break;
