@@ -72,7 +72,7 @@ console.log("FERRAMENTAS ESTÃO OK");
 const tmi = require('tmi.js');
 //const { count } = require('./models/MAGOmodel');
 const pafonBotName = 'magorangotango';
-const canais = ['magorangotango', 'pafon22'];
+const canais = ['magorangotango', 'pafon22', 'tvmago'];
 const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
 
 const opts = {
@@ -297,11 +297,6 @@ function mensagemChegou(channel, contexto, mensagem, ehBot) {
                   break;
                 case "DISC":
                 case "DISCORD":
-                  copia = defaultController.removePalavra(msg, 2);
-                  editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
-                  break;
-                case "RACA":
-                case "RAÇA":
                   copia = defaultController.removePalavra(msg, 2);
                   editar(nomeDoComando[1], nomeDoComando[0], copia, channel);
                   break;
