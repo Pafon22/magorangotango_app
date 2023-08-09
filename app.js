@@ -46,7 +46,8 @@ const mongoose = require('mongoose');
 
 // Ligar á B.D.: 'test'->user da BD, ´nnn´->pass
 //mongoose.connect('mongodb+srv://test:nnn@nodejscluster-art2k.mongodb.net/test?retryWrites=true');
-mongoose.connect('mongodb://magorangotango:tvm4g0db@rpg-shard-00-00.bpwba.mongodb.net:27017,rpg-shard-00-01.bpwba.mongodb.net:27017,rpg-shard-00-02.bpwba.mongodb.net:27017/bancoDeDados?ssl=true&replicaSet=atlas-tyoaok-shard-0&authSource=admin&retryWrites=true&w=majority',
+mongoose.connect('---',
+                 
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
