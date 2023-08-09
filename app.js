@@ -74,7 +74,7 @@ const tmi = require('tmi.js');
 const pafonBotName = 'magorangotango';
 const canais = ['magorangotango', 'pafon22', 'tvmago'];
 //const canais = ['magorangotango', 'pafon22'];
-const tokenBot = 'oauth:17lpndi843ut3fskisd6n96igl0snb';
+const tokenBot = 'oauth:---';
 
 const opts = {
   identity: {
